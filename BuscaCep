@@ -1,0 +1,15 @@
+@Api(name = "buscacep", description = "Conjunto de serviços para consulta de CEP")
+public class CepEndpoint {
+
+	private CEPService cepService = new MemcacheCepServiceDecorator(CEPServiceFactory.getCEPService());
+
+	@ApiMethod(httpMethod = "GET", name = "cep.get")
+	public CEP getCep(@Named("numeroCep") String numeroCep) {
+		return cepService.obtemPorNumeroCEP(numeroCep);
+	}
+
+	@ApiMethod(httpMethod = "GET", name = "cep.search")
+	public List<CEP> searchCep(@Named("term") String query) {
+		return cepService.obtemPorEndereco(query);		
+	}
+}
